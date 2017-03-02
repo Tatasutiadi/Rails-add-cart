@@ -1,0 +1,47 @@
+<div class="row">
+  <% @product.each do |data|%>
+      <div class="col s12 m4">
+        <div class="card">
+          <div class="card-image">
+            <img class="materialboxed" src="<%= data.image%>" height="200px">
+            <a title="Add To Cart" href="#" onclick="addCart('<%= data.id%>')" class="btn-floating btn-large halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+          </div>
+          <div class="card-content">
+            <span class="card-title"><a href="#"><%= data.product_name%></a></span>
+            <p><%= number_to_currency(data.price,:unit=>'Rp. ', precision: 0)%></p>
+          </div>
+        </div>
+      </div>
+  <% end%>
+
+</div>
+<ul class="pagination">
+  <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+  <li class="active"><a href="#!">1</a></li>
+  <li class="waves-effect"><a href="#!">2</a></li>
+  <li class="waves-effect"><a href="#!">3</a></li>
+  <li class="waves-effect"><a href="#!">4</a></li>
+  <li class="waves-effect"><a href="#!">5</a></li>
+  <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+</ul>
+
+<script>
+function addCart(product){
+    var product_id = product;
+    $.ajax({
+        type:'POST',
+        data:{product_id:product_id},
+        dataType: "json",
+        url:'<%= addCart_path %>',
+        success:function(data){
+            setTimeout(function(){
+                $("span > .cart").load(function () {
+                    delete jQuery.Velocity;
+                    jQuery.getScript("https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.js");
+                });
+            }, 1000);
+        },
+        error: function (jqXHR, textStatus, errorThrown) { console.log(errorThrown);}
+    });
+}
+</script>
