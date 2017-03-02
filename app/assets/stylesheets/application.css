@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+.resume{
+    background: #f5f2f0;
+}
+
+.mdi-image-exposure-minus-1:before {
+    content: "--"; }

@@ -15,7 +15,7 @@ default: &default
   pool: 5
   username: root
   password:
-  socket: /tmp/mysql.sock
+  socket: /Applications/XAMPP/xamppfiles/var/mysql/mysql.sock
 
 development:
   <<: *default
@@ -47,8 +47,8 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-production:
-  <<: *default
-  database: addcart-rails_production
-  username: addcart-rails
-  password: <%= ENV['ADDCART-RAILS_DATABASE_PASSWORD'] %>
+#production:
+#  <<: *default
+#  database: addcart-rails_production
+#  username: addcart-rails
+#  password: <%= ENV['ADDCART-RAILS_DATABASE_PASSWORD'] %>

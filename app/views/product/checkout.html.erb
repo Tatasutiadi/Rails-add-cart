@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="col s8 m8 l8">
+    <% @total = 0;
+      @temp.each do |data| %>
+        <% @total = @total + data.products.price%>
+        <div class="col s12">
+          <div class="row">
+            <div class="card horizontal">
+              <div class="card-image">
+                <% debug data.products.id%>
+                <img class="materialboxed" src="<%= data.products.image%>" width="200px" height="150px">
+              </div>
+              <div class="card-stacked">
+                <div class="card-content">
+                  <span class="card-title"><%= data.products.product_name%></span>
+                  <p><%= number_to_currency(data.products.price,:unit=>'Rp. ', precision: 0)%></p>
+                </div>
+                <div class="card-action">
+                  <div class="input-field inline">
+                    <input id="qty_<%= data.id%>" type="text" class="validate" value="<%= data.qty%>">
+                    <input id="price_<%= data.id%>" type="hidden" class="validate" value="<%= data.products.price%>">
+                  </div>
+                  <a href="#" onclick="minus(<%= data.id%>)" class="waves-circle waves-light btn-floating red">
+                    <i class="mdi-image-exposure-minus-1"></i>
+                  </a>
+                  <a href="#" onclick="add(<%= data.id%>)" class="waves-effect waves-circle waves-light btn-floating">
+                    <i class="material-icons">add</i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    <%end%>
+  </div>
+  <div class="col m4 l4">
+    <div class="resume">
+      <div class="toc-wrapper pin-top" style="top: 0px;">
+        <div style="">
+          <ul class="section table-of-contents">
+            <li><a href="#" class="active">Resume</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input value="Alvin" id="first_name2" type="text" class="validate">
+        <label class="active" for="first_name2">Full Name</label>
+      </div>
+      <div class="input-field col s12">
+        <input value="<%= number_to_currency(@total,:unit=>'', precision: 0)%>" id="total" type="text" class="validate">
+        <label class="active" for="total">Total</label>
+      </div>
+    </div>
+    <a href="<%= checkoutcart_path%>" class="waves-effect waves-light btn-large" style="width: 100%;border-top-left-radius: inherit;border-top-right-radius: inherit;border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">Process</a>
+  </div>
+</div>
+
+
+
+<script>
+  function minus(id) {
+    var a = parseInt($('#qty_'+id).val());
+    var b = 1;
+    qtytot = a-b;
+    var price = parseInt($('#price_'+id).val());
+    kali = b * price;
+    var tot = Number($('#total').val().replace(/[^0-9\.]+/g,""));
+    totprice = tot - kali;
+    total(totprice);
+    console.log(tot);
+    setTimeout(function(){
+        $('#qty_'+id).val(qtytot);
+        delete jQuery.Velocity;
+        jQuery.getScript("https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.js");
+
+    }, 1000);
+  }
+  function add(id) {
+      var a = parseInt($('#qty_'+id).val());
+      var b = 1;
+      qtytot = a+b;
+      var price = parseInt($('#price_'+id).val());
+      kali = b * price;
+      var tot = Number($('#total').val().replace(/[^0-9\.]+/g,""));
+      totprice = tot + kali;
+      total(totprice);
+      setTimeout(function(){
+          $('#qty_'+id).val(qtytot);
+          delete jQuery.Velocity;
+          jQuery.getScript("https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.js");
+
+      }, 1000);
+  }
+  function total(total) {
+      setTimeout(function(){
+          $('#total').val(total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+          delete jQuery.Velocity;
+          jQuery.getScript("https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.js");
+
+      }, 1000);
+  }
+</script>
+

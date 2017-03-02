@@ -1,14 +1,66 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AddcartRails</title>
+    <title>Add Cart Rails</title>
     <%= csrf_meta_tags %>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <nav>
+      <div class="nav-wrapper">
+        <!--<form id="formsearch">-->
+          <!--<div class="input-field">-->
+            <!--<input id="search" type="search" required>-->
+            <!--<label class="label-icon" for="search"><i class="material-icons">search</i></label>-->
+            <!--<i class="material-icons" onclick="showback();return false;">close</i>-->
+          <!--</div>-->
+        <!--</form>-->
+        <ul class="right hide-on-med-and-down" id="show">
+          <li><a href="#" onclick="show();return false;"><i class="material-icons">search</i></a></li>
+          <li><a href="<%= checkout_path%>" class="waves-light teal"><i class="material-icons left">shopping_cart</i> Checkout <span class="new badge red" data-badge-caption="" id="countCart">
+
+            <%
+              if session['product_id'].present?
+              @temp = OrderTemp.count
+            %>
+                <span class="cart"><%= @temp%></span>
+                <% else%>
+                <!--<span class="cart">0</span>-->0
+             <% end
+            %></span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <%= yield %>
+    </div>
+
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
   </body>
 </html>
+<script>
+    $(document).ready(function(){
+//        $('#formsearch').fadeOut();
+    });
+    function show() {
+        $('#formsearch').fadeIn();
+        $('#show').fadeOut();
+    }
+
+    function showback() {
+        $('#formsearch').fadeOut();
+        $('#show').fadeIn();
+    }
+</script>
